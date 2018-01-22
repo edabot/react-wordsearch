@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import WordSearch from "./wordSearch"
+import WordSearchDisplay from './WordSearchDisplay.react'
 
 class App extends Component {
 
@@ -9,12 +9,9 @@ class App extends Component {
     super(props)
 
     this.state = {
-      wordText: ""
+      wordText: "",
+      results: null
     }
-  }
-
-  componentDidMount() {
-    WordSearch()
   }
 
   updateWords(e) {
@@ -23,21 +20,16 @@ class App extends Component {
 
   makeWordSearch() {
     let wordList = this.state.wordText.split("\n")
-    WordSearch(wordList)
+    this.setState({ results: WordSearch(wordList) })
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+
         <div onClick={this.makeWordSearch.bind(this)}>make a word search</div>
         <textarea onChange={this.updateWords.bind(this)} value={this.state.wordText}/>
+        {this.state.results && <WordSearchDisplay results={this.state.results} wordList={this.state.wordText.split("\n")} /> }
       </div>
     );
   }

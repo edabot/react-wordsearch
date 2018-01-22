@@ -27,7 +27,7 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
   let cleanedWordList = removeNonCharactersAndUppercase(wordList)
   let words = cleanedWordList.sort(compareWordLength)
 
-  let rows = words[0].length + 20
+  let rows = words[0].length + 2
   let cols = rows
   const dirs = ['right', 'left', 'up', 'down', 'rightup', 'rightdown', 'leftup', 'leftdown']
   let filler = ""
@@ -145,13 +145,13 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
   }
 
   const runWordSearch = () => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 3; i++) {
       let result = createWordSearch()
       if (result !== true) {
         grid = result
         break
       }
-      if ( i === 9 ) {
+      if ( i === 2 ) {
         rows += 1
         cols += 1
         runWordSearch()
@@ -162,7 +162,7 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
   runWordSearch()
   grid = fillUpGrid(grid, filler)
   displayGrid(grid, rows, cols)
-  return grid
+  return {grid: grid, rows: rows}
 }
 
 export default WordSearch
