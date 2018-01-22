@@ -1,6 +1,24 @@
 .App {
   text-align: center;
   width: 100%;
+
+}
+
+.word-input {
+  width: 300px;
+  max-width: 300px;
+  margin: .5rem;
+}
+
+.button-make {
+  padding: .5em 1em;
+  background-color: #728C41;
+  color: white;
+  border-radius: 20px;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 1px 5px 5px rgba(0,0,0, .2);
+  margin-bottom: 1rem;
 }
 
 .grid {
@@ -35,4 +53,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, 100px);
 
+}
+
+@media print
+{
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
 }
