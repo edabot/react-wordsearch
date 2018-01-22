@@ -25,8 +25,11 @@ const displayGrid = (grid, rows) => {
 
 const displayWordList = (wordList) => {
   return (
-    <div className="word-list">
-      {wordList.map(word => <div key={word}>{word}</div>)}
+    <div>
+      <h2 className="word-list-header">Word List</h2>
+      <div className="word-list">
+        {wordList.map(word => <div key={word}>{word}</div>)}
+      </div>
     </div>
   )
 }

@@ -22,3 +22,17 @@
 .letter:not(:last-child) {
   margin-right: .4em;
 }
+
+.word-list-header {
+  margin-top: 1em;
+  font-size: 1.2em;
+}
+
+.word-list {
+  margin: 0 auto;
+  width: 80%;
+  min-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+
+}
