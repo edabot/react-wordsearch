@@ -11,6 +11,7 @@ class App extends Component {
 
     this.state = {
       wordText: "cat\ndog\nbird",
+      wordList: [],
       results: null
     }
   }
@@ -21,7 +22,7 @@ class App extends Component {
 
   makeWordSearch() {
     let wordList = this.state.wordText.split("\n")
-    this.setState({ results: WordSearch(wordList) })
+    this.setState({ results: WordSearch(wordList), wordList: wordList })
   }
 
   render() {
@@ -39,7 +40,7 @@ class App extends Component {
         </div>
           <div className="button-make" onClick={this.makeWordSearch.bind(this)}>make a word search</div>
         </div>
-        {this.state.results && <WordSearchDisplay results={this.state.results} wordList={this.state.wordText.split("\n")} /> }
+        {this.state.results && <WordSearchDisplay results={this.state.results} wordList={this.state.wordList} /> }
       </div>
     );
   }
