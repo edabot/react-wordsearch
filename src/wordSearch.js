@@ -127,7 +127,8 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
   }
 
   const createWordSearch = () => {
-    let error = false;
+    let error = false,
+      wordPlacements = {};
     grid = new Array(rows * cols).fill('#')
     for (let i = 0; i < words.length; i++ ) {
       let currentWord = words[i]
@@ -139,8 +140,11 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
       } else {
         let idx = Math.floor(Math.random() * placements.length)
         grid = updateGrid(grid, placements[idx], currentWord)
+        wordPlacements[currentWord] = placements[idx]
       }
     }
+    console.log(wordPlacements);
+
     return grid
   }
 

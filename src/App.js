@@ -4,6 +4,23 @@ import WordSearch from "./wordSearch"
 import WordSearchDisplay from './WordSearchDisplay.react'
 import Textarea from "react-textarea-autosize";
 
+const removeNonCharactersAndUppercase = (string) => {
+  return string.replace(/[\W_]/g, '').toUpperCase()
+}
+
+const removeArrayRepeats = (array) => {
+  let existingWords = {},
+  result = []
+  for (let i = 0; i < array.length; i++) {
+    let cleanedWord = removeNonCharactersAndUppercase(array[i])
+    if (!existingWords[cleanedWord]) {
+      result.push(array[i])
+      existingWords[cleanedWord] = true
+    }
+  }
+  return result
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -22,6 +39,7 @@ class App extends Component {
 
   makeWordSearch() {
     let wordList = this.state.wordText.split("\n")
+    wordList = removeArrayRepeats(wordList)
     this.setState({ results: WordSearch(wordList), wordList: wordList })
   }
 
