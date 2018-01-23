@@ -155,7 +155,6 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
         break
       }
       if ( i === 2 ) {
-        console.log('going up');
         rows += 1
         cols += 1
         runWordSearch()
