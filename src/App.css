@@ -37,7 +37,17 @@
   text-align: center;
 }
 
+.letter-highlight {
+  width: 1em;
+  text-align: center;
+  color: red;
+}
+
 .letter:not(:last-child) {
+  margin-right: .4em;
+}
+
+.letter-highlight:not(:last-child) {
   margin-right: .4em;
 }
 
@@ -56,6 +66,10 @@
 
 .word-list > div {
   padding: 10px 5px;
+}
+
+.word-highlighted {
+  color: red;
 }
 
 @media print

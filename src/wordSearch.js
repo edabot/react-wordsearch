@@ -60,11 +60,6 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     'leftdown': (pos, length) => { return {row: pos.row + length, col: pos.col - length}}
   }
 
-
-  const coordsToPos = (row, column) => {
-      return row * cols + column
-  }
-
   const rowColFromPos = (position) => {
     let row = Math.floor(position / cols),
       col = position % cols
@@ -100,18 +95,6 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     return true
   }
 
-
-  const displayGrid = (gridToShow, rowCount, colCount) => {
-    for (let i = 0; i < rowCount; i++) {
-      let rowString = ""
-      for (let j = 0; j < colCount; j++) {
-        let position = coordsToPos(i, j)
-        rowString += gridToShow[position]
-      }
-      console.log(rowString)
-    }
-  }
-
   const scanPlacements = (word, grid) => {
     let placements = []
     for (let j = 0; j < grid.length; j++) {
@@ -126,34 +109,41 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     return placements
   }
 
+  const getPositions = (placement, length) => {
+    let positionArray = [],
+      { position, direction } = placement
+    for (let i = 0; i < length; i++) {
+      positionArray.push(position)
+      position = dirNext[direction](position)
+    }
+    return positionArray
+  }
+
   const createWordSearch = () => {
-    let error = false,
-      wordPlacements = {};
+    let wordPositionsObject = {};
     grid = new Array(rows * cols).fill('#')
     for (let i = 0; i < words.length; i++ ) {
       let currentWord = words[i]
       let placements = scanPlacements(currentWord, grid)
       if (placements.length === 0) {
         console.log('error')
-        error = true
-        return error
+        return 'error'
       } else {
         let idx = Math.floor(Math.random() * placements.length)
         grid = updateGrid(grid, placements[idx], currentWord)
-        wordPlacements[currentWord] = placements[idx]
+        let wordPositions = getPositions(placements[idx], currentWord.length)
+        wordPositionsObject[currentWord] = wordPositions
       }
     }
-    console.log(wordPlacements);
-
-    return grid
+    grid = fillUpGrid(grid, filler)
+    return {grid: grid, wordPositions: wordPositionsObject, rows: rows}
   }
 
   const runWordSearch = () => {
     for (let i = 0; i < 3; i++) {
       let result = createWordSearch()
-      if (result !== true) {
-        grid = result
-        break
+      if (result !== 'error') {
+        return result
       }
       if ( i === 2 ) {
         rows += 1
@@ -163,10 +153,7 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     }
   }
 
-  runWordSearch()
-  grid = fillUpGrid(grid, filler)
-  displayGrid(grid, rows, cols)
-  return {grid: grid, rows: rows}
+  return runWordSearch()
 }
 
 export default WordSearch

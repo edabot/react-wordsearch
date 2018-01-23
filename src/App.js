@@ -29,7 +29,9 @@ class App extends Component {
     this.state = {
       wordText: "cat\ndog\nbird",
       wordList: [],
-      results: null
+      results: null,
+      hoverWord: null,
+      showPositions: null
     }
   }
 
@@ -41,6 +43,16 @@ class App extends Component {
     let wordList = this.state.wordText.split("\n")
     wordList = removeArrayRepeats(wordList)
     this.setState({ results: WordSearch(wordList), wordList: wordList })
+  }
+
+  changeHoverWord(e) {
+    let hoverWord = removeNonCharactersAndUppercase(e.target.innerHTML),
+      showPositions = this.state.results.wordPositions[hoverWord]
+    this.setState({ hoverWord: hoverWord, showPositions: showPositions })
+  }
+
+  clearHoverWord(e) {
+    this.setState({ hoverWord: "", showPositions: [] })
   }
 
   render() {
@@ -58,7 +70,11 @@ class App extends Component {
         </div>
           <div className="button-make" onClick={this.makeWordSearch.bind(this)}>make a word search</div>
         </div>
-        {this.state.results && <WordSearchDisplay results={this.state.results} wordList={this.state.wordList} /> }
+        {this.state.results && <WordSearchDisplay results={this.state.results} wordList={this.state.wordList}
+        changeHoverWord={this.changeHoverWord.bind(this)}
+        clearHoverWord={this.clearHoverWord.bind(this)}
+        hoverWord={this.state.hoverWord}
+        showPositions={this.state.showPositions} /> }
       </div>
     );
   }
