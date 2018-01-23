@@ -120,14 +120,16 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
   }
 
   const createWordSearch = () => {
-    let wordPositionsObject = {};
+    let wordPositionsObject = {},
+    error = false;
     grid = new Array(rows * cols).fill('#')
     for (let i = 0; i < words.length; i++ ) {
       let currentWord = words[i]
       let placements = scanPlacements(currentWord, grid)
       if (placements.length === 0) {
         console.log('error')
-        return 'error'
+        error = true
+        break
       } else {
         let idx = Math.floor(Math.random() * placements.length)
         grid = updateGrid(grid, placements[idx], currentWord)
@@ -135,25 +137,33 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
         wordPositionsObject[currentWord] = wordPositions
       }
     }
+    if (error) {
+      console.log('error handled');
+      return 'error'
+    }
     grid = fillUpGrid(grid, filler)
     return {grid: grid, wordPositions: wordPositionsObject, rows: rows}
   }
+
+  let response = null
 
   const runWordSearch = () => {
     for (let i = 0; i < 3; i++) {
       let result = createWordSearch()
       if (result !== 'error') {
-        return result
+        response = result
+        break
       }
       if ( i === 2 ) {
+        console.log('going up');
         rows += 1
         cols += 1
         runWordSearch()
       }
     }
   }
-
-  return runWordSearch()
+  runWordSearch()
+  return response
 }
 
 export default WordSearch
