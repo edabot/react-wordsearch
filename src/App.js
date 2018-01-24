@@ -3,6 +3,7 @@ import './App.css';
 import WordSearch from "./wordSearch"
 import WordSearchDisplay from './WordSearchDisplay.react'
 import Textarea from "react-textarea-autosize";
+import utils from './util'
 
 const removeNonCharactersAndUppercase = (string) => {
   return string.replace(/[\W_]/g, '').toUpperCase()
@@ -31,7 +32,15 @@ class App extends Component {
       wordList: [],
       results: null,
       hoverWord: null,
-      showPositions: null
+      showPositions: null,
+      url: null
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.match) {
+      utils.getGrid(this.props.match.params.id, this.loadGrid.bind(this))
+      this.setState({ url: `wordsearchmachine.com/${this.props.match.params.id}`})
     }
   }
 
@@ -45,6 +54,22 @@ class App extends Component {
     this.setState({ results: WordSearch(wordList), wordList: wordList })
   }
 
+  saveGrid() {
+    utils.postGrid(this.state.results.grid, this.state.results.rows, this.state.results.wordPositions, this.state.wordList, this.updateUrl.bind(this))
+  }
+
+  updateUrl(id) {
+    let path = "/" + id.data
+    window.history.pushState({urlPath:path},"",path)
+    this.setState({url: `wordsearchmachine.com/${id.data}`})
+  }
+
+  loadGrid(data) {
+    let {grid, rows, wordList, wordPositions} = data.data
+    let results = { grid: grid, rows: rows, wordPositions: wordPositions }
+    this.setState({ results: results, wordList: wordList, wordText: wordList.join('\n')  })
+  }
+
   changeHoverWord(e) {
     let hoverWord = removeNonCharactersAndUppercase(e.target.innerHTML),
       showPositions = this.state.results.wordPositions[hoverWord]
@@ -53,6 +78,14 @@ class App extends Component {
 
   clearHoverWord(e) {
     this.setState({ hoverWord: "", showPositions: [] })
+  }
+
+  displayUrl() {
+    if (this.state.url) {
+      return (
+        <div>{this.state.url}</div>
+      )
+    }
   }
 
   render() {
@@ -70,11 +103,16 @@ class App extends Component {
         </div>
           <div className="button-make" onClick={this.makeWordSearch.bind(this)}>make a word search</div>
         </div>
-        {this.state.results && <WordSearchDisplay results={this.state.results} wordList={this.state.wordList}
-        changeHoverWord={this.changeHoverWord.bind(this)}
-        clearHoverWord={this.clearHoverWord.bind(this)}
-        hoverWord={this.state.hoverWord}
-        showPositions={this.state.showPositions} /> }
+        {this.state.results && <div><WordSearchDisplay
+          results={this.state.results}
+          wordList={this.state.wordList}
+          changeHoverWord={this.changeHoverWord.bind(this)}
+          clearHoverWord={this.clearHoverWord.bind(this)}
+          hoverWord={this.state.hoverWord}
+          showPositions={this.state.showPositions} /><div className="button-make" onClick={this.saveGrid.bind(this)}>save</div>
+          </div>
+        }
+        {this.displayUrl()}
       </div>
     );
   }

@@ -162,6 +162,7 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     }
   }
   runWordSearch()
+  console.log(response);
   return response
 }
 
