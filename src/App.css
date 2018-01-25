@@ -74,6 +74,11 @@
 
 @media print
 {
+
+  .grid {
+    display: inline-block;
+    margin: 120px auto 0 auto;
+  }
     .no-print, .no-print *
     {
         display: none !important;
