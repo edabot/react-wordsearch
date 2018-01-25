@@ -23,3 +23,7 @@ To do:
  - Add page with lists of pre-made grids
  - Handle error response for loading a grid from DynamoDB
  - Improve layout
+
+ Thanks to these resources:
+ [Jamis Buck's Generating Word Search Puzzles](http://weblog.jamisbuck.org/2015/9/26/generating-word-search-puzzles.html)
+ [bunkat's wordfind](https://github.com/bunkat/wordfind)
