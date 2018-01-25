@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   loadGrid(data) {
-    let {grid, rows, wordList, wordPositions} = data.data
+    let {grid, rows, wordList, wordPositions} = data
     let results = { grid: grid, rows: rows, wordPositions: wordPositions }
     this.setState({ results: results, wordList: wordList, wordText: wordList.join('\n')  })
   }
