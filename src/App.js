@@ -14,7 +14,7 @@ const removeArrayRepeats = (array) => {
   result = []
   for (let i = 0; i < array.length; i++) {
     let cleanedWord = removeNonCharactersAndUppercase(array[i])
-    if (!existingWords[cleanedWord]) {
+    if (!existingWords[cleanedWord] && cleanedWord.length > 0) {
       result.push(array[i])
       existingWords[cleanedWord] = true
     }
