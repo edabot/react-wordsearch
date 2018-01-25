@@ -33,7 +33,8 @@ class App extends Component {
       results: null,
       hoverWord: null,
       showPositions: null,
-      url: null
+      url: null,
+      canSave: false
     }
   }
 
@@ -45,13 +46,13 @@ class App extends Component {
   }
 
   updateWords(e) {
-    this.setState({ wordText: e.target.value})
+    this.setState({ wordText: e.target.value, canSave: false })
   }
 
   makeWordSearch() {
     let wordList = this.state.wordText.split("\n")
     wordList = removeArrayRepeats(wordList)
-    this.setState({ results: WordSearch(wordList), wordList: wordList })
+    this.setState({ results: WordSearch(wordList), wordList: wordList, canSave: true })
   }
 
   saveGrid() {
@@ -88,31 +89,52 @@ class App extends Component {
     }
   }
 
+  displayResults() {
+    if (this.state.results) {
+      return (
+        <div>
+          <WordSearchDisplay
+            results={this.state.results}
+            wordList={this.state.wordList}
+            changeHoverWord={this.changeHoverWord.bind(this)}
+            clearHoverWord={this.clearHoverWord.bind(this)}
+            hoverWord={this.state.hoverWord}
+            showPositions={this.state.showPositions} />
+        </div>
+      )
+    }
+  }
+
+  displaySaveButton() {
+    if (this.state.canSave) {
+      return (
+        <div className="button-make no-print" onClick={this.saveGrid.bind(this)}>
+          save
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <div className='no-print'>
           <div>Add your list of words here, separated by line breaks</div>
           <div>
-          <Textarea
-            useCacheForDOMMeasurements
-            value={this.state.wordText}
-            className="word-input"
-            onChange={this.updateWords.bind(this)}
-            />
-        </div>
-          <div className="button-make" onClick={this.makeWordSearch.bind(this)}>make a word search</div>
-        </div>
-        {this.state.results && <div><WordSearchDisplay
-          results={this.state.results}
-          wordList={this.state.wordList}
-          changeHoverWord={this.changeHoverWord.bind(this)}
-          clearHoverWord={this.clearHoverWord.bind(this)}
-          hoverWord={this.state.hoverWord}
-          showPositions={this.state.showPositions} /><div className="button-make" onClick={this.saveGrid.bind(this)}>save</div>
+            <Textarea
+              useCacheForDOMMeasurements
+              value={this.state.wordText}
+              className="word-input"
+              onChange={this.updateWords.bind(this)}
+              />
           </div>
-        }
+          <div className="button-make" onClick={this.makeWordSearch.bind(this)}>
+            make a word search
+          </div>
+        </div>
+        {this.displayResults()}
         {this.displayUrl()}
+        {this.displaySaveButton()}
       </div>
     );
   }
