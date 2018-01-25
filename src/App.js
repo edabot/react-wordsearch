@@ -118,7 +118,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className='no-print'>
+        <div className='controls no-print'>
           <div>Add your list of words here, separated by line breaks</div>
           <div>
             <Textarea
