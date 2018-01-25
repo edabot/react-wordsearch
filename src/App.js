@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    if (this.props.match) {
+    if (this.props.match.params.id) {
       utils.getGrid(this.props.match.params.id, this.loadGrid.bind(this))
       this.setState({ url: `wordsearchmachine.com/${this.props.match.params.id}`})
     }
@@ -81,7 +81,7 @@ class App extends Component {
   }
 
   displayUrl() {
-    if (this.state.url) {
+    if (this.state.url !== null) {
       return (
         <div>{this.state.url}</div>
       )

@@ -3,7 +3,7 @@ import shortid from 'shortid'
 
 const utils = {
   postGrid: (grid, rows, wordPositions, wordList, callback) => {
-    axios.post("https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/dev", {
+    axios.post("https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/prod", {
       "gridId": shortid.generate(),
       "grid": grid,
       "rows": rows,
@@ -19,7 +19,7 @@ const utils = {
   },
 
   getGrid: (gridId, callback) => {
-    axios.get('https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/dev/?gridId=' + gridId)
+    axios.get('https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/prod/?gridId=' + gridId)
       .then(function (response) {
         callback(response);
       })
