@@ -1,9 +1,17 @@
 import axios from 'axios'
 import shortid from 'shortid'
 
+var url = "https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/"
+
+if (process.env.NODE_ENV === 'production') {
+  url += "prod"
+} else {
+  url += "dev"
+}
+
 const utils = {
   postGrid: (grid, rows, wordPositions, wordList, callback) => {
-    axios.post("https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/prod", {
+    axios.post(url, {
       "gridId": shortid.generate(),
       "grid": grid.join(" "),
       "rows": rows,
@@ -19,7 +27,7 @@ const utils = {
   },
 
   getGrid: (gridId, callback) => {
-    axios.get('https://qr7yduveu8.execute-api.us-east-1.amazonaws.com/prod/?gridId=' + gridId)
+    axios.get(url + '/?gridId=' + gridId)
       .then(function (response) {
         let data = response.data
         data.grid = data.grid.split(' ')
