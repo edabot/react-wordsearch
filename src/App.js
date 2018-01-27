@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import copy from 'copy-to-clipboard';
 
 const removeNonCharactersAndUppercase = (string) => {
-  return string.replace(/[\w_]/g, '').toUpperCase()
+  return string.replace(/[\W_]/g, '').toUpperCase()
 }
 
 const removeArrayRepeats = (array) => {

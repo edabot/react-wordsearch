@@ -6,7 +6,7 @@ const compareWordLength = (a, b) => {
 }
 
 const removeNonCharactersAndUppercase = (stringArray) => {
-  return stringArray.map(string => string.replace(/[\w_]/g, '').toUpperCase())
+  return stringArray.map(string => string.replace(/[\W_]/g, '').toUpperCase())
 }
 
 const fillUpGrid = (hashGrid, filler) => {
