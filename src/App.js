@@ -4,7 +4,10 @@ import WordSearch from "./wordSearch"
 import WordSearchDisplay from './WordSearchDisplay.react'
 import Textarea from "react-textarea-autosize";
 import utils from './util'
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import copy from 'copy-to-clipboard';
 
 const removeNonCharactersAndUppercase = (string) => {
   return string.replace(/[\W_]/g, '').toUpperCase()
@@ -35,7 +38,8 @@ class App extends Component {
       hoverWord: null,
       showPositions: null,
       url: null,
-      canSave: false
+      canSave: false,
+      saveDialogOpen: false
     }
   }
 
@@ -63,7 +67,7 @@ class App extends Component {
   updateUrl(id) {
     let path = "/" + id.data
     window.history.pushState({urlPath:path},"",path)
-    this.setState({url: `wordsearchmachine.com/${id.data}`})
+    this.setState({url: `wordsearchmachine.com/${id.data}`, saveDialogOpen: true})
   }
 
   loadGrid(data) {
@@ -116,7 +120,35 @@ class App extends Component {
     }
   }
 
+  handleOpen = () => {
+    this.setState({saveDialogOpen: true});
+  };
+
+  handleClose = () => {
+    this.setState({saveDialogOpen: false});
+  };
+
+  handleCopy = () => {
+    copy(this.state.url)
+  }
+
   render() {
+
+    const actions = [
+      <FlatButton
+        label="Copy to clipboard"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleCopy.bind(this)}
+      />,
+      <FlatButton
+        label="Close"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+        />
+    ];
+
+
     return (
       <div className="App">
         <div className='controls no-print'>
@@ -134,6 +166,16 @@ class App extends Component {
         {this.displayResults()}
         {this.displayUrl()}
         {this.displaySaveButton()}
+        <Dialog
+             title="You word search has been saved"
+             modal={false}
+             actions={actions}
+             open={this.state.saveDialogOpen}
+             onRequestClose={this.handleClose}
+           >
+
+             Use this URL to come back to it: {this.state.url}
+          </Dialog>
       </div>
     );
   }

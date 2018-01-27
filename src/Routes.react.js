@@ -7,11 +7,10 @@ import App from './App'
 import Navbar from './components/Navbar.react'
 import Lists from './components/Lists.react'
 import About from './components/About.react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const Routes = () => (
   <Router>
-    <MuiThemeProvider>
+    <div>
       <Navbar />
       <Switch>
         <Route exact path="/" component={App} />
@@ -19,7 +18,7 @@ const Routes = () => (
         <Route path="/about" component={About} />
         <Route path="/:id" component={App}/>
       </Switch>
-    </MuiThemeProvider>
+    </div>
   </Router>
 )
 
