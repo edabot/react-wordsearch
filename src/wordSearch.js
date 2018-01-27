@@ -127,7 +127,6 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
       let currentWord = words[i]
       let placements = scanPlacements(currentWord, grid)
       if (placements.length === 0) {
-        console.log('error')
         error = true
         break
       } else {
@@ -138,7 +137,6 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
       }
     }
     if (error) {
-      console.log('error handled');
       return 'error'
     }
     grid = fillUpGrid(grid, filler)
@@ -162,7 +160,6 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     }
   }
   runWordSearch()
-  console.log(response);
   return response
 }
 
