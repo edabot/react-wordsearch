@@ -4,6 +4,7 @@ import WordSearch from "./wordSearch"
 import WordSearchDisplay from './WordSearchDisplay.react'
 import Textarea from "react-textarea-autosize";
 import utils from './util'
+import RaisedButton from 'material-ui/RaisedButton';
 
 const removeNonCharactersAndUppercase = (string) => {
   return string.replace(/[\W_]/g, '').toUpperCase()
@@ -108,8 +109,8 @@ class App extends Component {
   displaySaveButton() {
     if (this.state.canSave) {
       return (
-        <div className="button-make no-print" onClick={this.saveGrid.bind(this)}>
-          save
+        <div>
+          <RaisedButton  label="save" className="no-print" primary={true} onClick={this.saveGrid.bind(this)} />
         </div>
       )
     }
@@ -128,9 +129,7 @@ class App extends Component {
               onChange={this.updateWords.bind(this)}
               />
           </div>
-          <div className="button-make" onClick={this.makeWordSearch.bind(this)}>
-            make a word search
-          </div>
+          <RaisedButton  label="make a word search" primary={true} onClick={this.makeWordSearch.bind(this)} />
         </div>
         {this.displayResults()}
         {this.displayUrl()}
