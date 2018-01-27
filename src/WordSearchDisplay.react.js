@@ -5,9 +5,9 @@ const chunk = (arr, size) =>
     arr.slice(i * size, i * size + size)
   );
 
-  const removeNonCharactersAndUppercase = (string) => {
-    return string.replace(/[\W_]/g, '').toUpperCase()
-  }
+const removeNonCharactersAndUppercase = (string) => {
+  return string.replace(/[\w_]/g, '').toUpperCase()
+}
 
 class WordSearchDisplay extends Component {
 
