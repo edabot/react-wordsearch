@@ -167,7 +167,7 @@ class App extends Component {
         {this.displayUrl()}
         {this.displaySaveButton()}
         <Dialog
-             title="You word search has been saved"
+             title="Your word search has been saved"
              modal={false}
              actions={actions}
              open={this.state.saveDialogOpen}
