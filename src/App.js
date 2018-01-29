@@ -57,7 +57,9 @@ class App extends Component {
   makeWordSearch() {
     let wordList = this.state.wordText.split("\n")
     wordList = removeArrayRepeats(wordList)
-    this.setState({ results: WordSearch(wordList), wordList: wordList, canSave: true, url: null })
+    if (wordList.length > 0) {
+      this.setState({ results: WordSearch(wordList), wordList: wordList, canSave: true, url: null })
+    }
   }
 
   saveGrid() {
