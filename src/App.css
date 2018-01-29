@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   width: 100%;
-
+  padding: 1em;
 }
 
 a { text-decoration: none }
@@ -35,9 +35,7 @@ a { text-decoration: none }
   .navbar_desktop {
     visibility: hidden;
   }
-
 }
-
 
 .navbar a {
   color: black;
@@ -135,13 +133,13 @@ a { text-decoration: none }
 .about-content {
   max-width: 800px;
   padding: 1em;
-  margin: 1em auto;
+  margin: 0 auto;
 }
 
 .lists-content {
   padding: 1em;
   max-width: 800px;
-  margin: 1em auto;
+  margin: 0 auto;
 }
 
 .lists-display {

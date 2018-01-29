@@ -175,7 +175,6 @@ class App extends Component {
              open={this.state.saveDialogOpen}
              onRequestClose={this.handleClose}
            >
-
              Use this URL to come back to it: {this.state.url}
           </Dialog>
       </div>
