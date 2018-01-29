@@ -4,18 +4,38 @@
 
 }
 
-.navbar_container {
-  box-shadow: .3em .3em .3em rgba(black, .2);
+.navbar_desktop {
+  background-color: #eee;
   border-bottom: 1px solid lightgray;
-  padding: 1em;
+  padding: 1em 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.navbar_mobile {
+    visibility: hidden;
+    position: fixed;
+  top: 0;
 }
 .navbar {
   margin: 0 auto;
+  padding: 0 1em;
   max-width: 800px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
+@media (max-width: 700px) {
+  .navbar_mobile {
+    visibility: visible;
+  }
+  .navbar_desktop {
+    visibility: hidden;
+  }
+
+}
+
 
 .navbar a {
   text-decoration: none;
@@ -113,10 +133,17 @@
 
 .about-content {
   max-width: 800px;
+  padding: 1em;
   margin: 1em auto;
 }
 
 .lists-content {
+  padding: 1em;
   max-width: 800px;
   margin: 1em auto;
+}
+
+.drawer a {
+  text-decoration: none;
+  color: black;
 }
