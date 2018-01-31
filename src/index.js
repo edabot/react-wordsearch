@@ -5,7 +5,6 @@ import Routes from './Routes.react';
 import registerServiceWorker from './registerServiceWorker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-
 const App = () => (
   <MuiThemeProvider>
     <Routes />

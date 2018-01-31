@@ -1,29 +1,13 @@
-
 import list from './list'
+import wordUtils from './util/wordUtils'
 
 const compareWordLength = (a, b) => {
   return b.length - a.length;
 }
 
-const removeNonCharactersAndUppercase = (stringArray) => {
-  return stringArray.map(string => string.replace(/[\W_]/g, '').toUpperCase())
-}
-
-const fillUpGrid = (hashGrid, filler) => {
-  let len = filler.length,
-    newGrid = hashGrid.slice()
-  for (let i = 0; i < hashGrid.length; i++) {
-    if ( hashGrid[i] === '#' ) {
-      let newLetter = filler[Math.floor(Math.random() * len)]
-      newGrid[i] = newLetter
-    }
-  }
-  return newGrid
-}
-
 const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
 
-  let cleanedWordList = removeNonCharactersAndUppercase(wordList)
+  let cleanedWordList = wordUtils.removeNonCharactersAndUppercaseForArray(wordList)
   let words = cleanedWordList.sort(compareWordLength)
 
   let rows = words[0].length + 2
@@ -32,7 +16,7 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
   let filler = ""
   let grid = new Array(rows * cols).fill('#')
 
-  //filler is a string with all words in it. This
+  //filler is a string with all words in it combined to match letter distribution
   for (let i=0; i < words.length; i++) {
     filler += words[i]
   }
@@ -138,7 +122,7 @@ const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
     if (error) {
       return 'error'
     }
-    grid = fillUpGrid(grid, filler)
+    grid = wordUtils.fillUpGrid(grid, filler)
     return {grid: grid, wordPositions: wordPositionsObject, rows: rows}
   }
 

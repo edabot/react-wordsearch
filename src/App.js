@@ -3,28 +3,12 @@ import './App.css';
 import WordSearch from "./wordSearch"
 import WordSearchDisplay from './WordSearchDisplay.react'
 import Textarea from "react-textarea-autosize";
-import utils from './util'
+import httpUtils from './util/httpUtils'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import copy from 'copy-to-clipboard';
-
-const removeNonCharactersAndUppercase = (string) => {
-  return string.replace(/[\W_]/g, '').toUpperCase()
-}
-
-const removeArrayRepeats = (array) => {
-  let existingWords = {},
-  result = []
-  for (let i = 0; i < array.length; i++) {
-    let cleanedWord = removeNonCharactersAndUppercase(array[i])
-    if (!existingWords[cleanedWord] && cleanedWord.length > 0) {
-      result.push(array[i])
-      existingWords[cleanedWord] = true
-    }
-  }
-  return result
-}
+import wordUtils from './util/wordUtils'
 
 class App extends Component {
 
@@ -45,7 +29,7 @@ class App extends Component {
 
   componentWillMount() {
     if (this.props.match.params.id) {
-      utils.getGrid(this.props.match.params.id, this.loadGrid.bind(this))
+      httpUtils.getGrid(this.props.match.params.id, this.loadGrid.bind(this))
       this.setState({ url: `wordsearchmachine.com/${this.props.match.params.id}`})
     }
   }
@@ -56,14 +40,14 @@ class App extends Component {
 
   makeWordSearch() {
     let wordList = this.state.wordText.split("\n")
-    wordList = removeArrayRepeats(wordList)
+    wordList = wordUtils.removeArrayRepeats(wordList)
     if (wordList.length > 0) {
       this.setState({ results: WordSearch(wordList), wordList: wordList, canSave: true, url: null })
     }
   }
 
   saveGrid() {
-    utils.postGrid(this.state.results.grid, this.state.results.rows, this.state.results.wordPositions, this.state.wordList, this.updateUrl.bind(this))
+    httpUtils.postGrid(this.state.results.grid, this.state.results.rows, this.state.results.wordPositions, this.state.wordList, this.updateUrl.bind(this))
   }
 
   updateUrl(id) {
@@ -79,7 +63,7 @@ class App extends Component {
   }
 
   changeHoverWord(e) {
-    let hoverWord = removeNonCharactersAndUppercase(e.target.innerHTML),
+    let hoverWord = wordUtils.removeNonCharactersAndUppercase(e.target.innerHTML),
       showPositions = this.state.results.wordPositions[hoverWord]
     this.setState({ hoverWord: hoverWord, showPositions: showPositions })
   }
