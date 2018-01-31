@@ -1,25 +1,19 @@
 import list from './list'
 import wordUtils from './util/wordUtils'
 
-const compareWordLength = (a, b) => {
-  return b.length - a.length;
-}
-
-const WordSearch = (wordList = list, rowInput = 50, colInput = 50) => {
+const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
 
   let cleanedWordList = wordUtils.removeNonCharactersAndUppercaseForArray(wordList)
-  let words = cleanedWordList.sort(compareWordLength)
+  let words = wordUtils.sortBiggestToShortest(cleanedWordList)
 
-  let rows = words[0].length + 2
-  let cols = rows
+  let rows = rowInput || words[0].length + 2
+  let cols = colInput || rows
+
   const dirs = ['right', 'left', 'up', 'down', 'rightup', 'rightdown', 'leftup', 'leftdown']
-  let filler = ""
   let grid = new Array(rows * cols).fill('#')
 
   //filler is a string with all words in it combined to match letter distribution
-  for (let i=0; i < words.length; i++) {
-    filler += words[i]
-  }
+  let filler = words.reduce( (x, y) => x + y )
 
   const dirNext = {
     'right': pos => pos + 1,

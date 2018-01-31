@@ -31,7 +31,16 @@ const wordUtils = {
       }
     }
     return newGrid
+  },
+
+  compareWordLength: (a, b) => {
+    return b.length - a.length;
+  },
+
+  sortBiggestToShortest: (words) => {
+    return words.sort(wordUtils.compareWordLength)
   }
+
 
 }
 
