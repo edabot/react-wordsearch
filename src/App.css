@@ -3,7 +3,9 @@
   width: 100%;
 }
 
-a { text-decoration: none }
+a {
+  text-decoration: none;
+}
 
 .navbar_desktop {
   background-color: #eee;
@@ -14,8 +16,8 @@ a { text-decoration: none }
   width: 100%;
 }
 .navbar_mobile {
-    visibility: hidden;
-    position: fixed;
+  visibility: hidden;
+  position: fixed;
   top: 0;
 }
 .navbar {
@@ -51,17 +53,27 @@ a { text-decoration: none }
 .word-input {
   width: 300px;
   max-height: 200px;
-  margin: .5rem;
+  margin: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button {
+  margin-right: 2em;
 }
 
 .button-make {
-  padding: .5em 1em;
-  background-color: #728C41;
+  padding: 0.5em 1em;
+  background-color: #728c41;
   color: white;
   border-radius: 20px;
   display: inline-block;
   cursor: pointer;
-  box-shadow: 1px 5px 5px rgba(0,0,0, .2);
+  box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 1rem;
 }
 
@@ -73,7 +85,7 @@ a { text-decoration: none }
 .row {
   display: flex;
   flex-direction: row;
-  margin-bottom: .4em;
+  margin-bottom: 0.4em;
 }
 
 .letter {
@@ -88,11 +100,11 @@ a { text-decoration: none }
 }
 
 .letter:not(:last-child) {
-  margin-right: .4em;
+  margin-right: 0.4em;
 }
 
 .letter-highlight:not(:last-child) {
-  margin-right: .4em;
+  margin-right: 0.4em;
 }
 
 .word-list-header {
@@ -116,17 +128,15 @@ a { text-decoration: none }
   color: red;
 }
 
-@media print
-{
-
+@media print {
   .grid {
     display: inline-block;
     margin: 120px auto 0 auto;
   }
-    .no-print, .no-print *
-    {
-        display: none !important;
-    }
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
 }
 
 .about-content {
