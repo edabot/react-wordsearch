@@ -1,5 +1,6 @@
 import list from './list';
 import wordUtils from './util/wordUtils';
+import WORDSEARCHCONSTANTS from './constants/wordSearch';
 
 const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   let cleanedWordList = wordUtils.removeNonCharactersAndUppercaseForArray(
@@ -10,58 +11,10 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   let rows = rowInput || words[0].length + 2;
   let cols = colInput || rows;
 
-  const dirs = [
-    'right',
-    'left',
-    'up',
-    'down',
-    'rightup',
-    'rightdown',
-    'leftup',
-    'leftdown'
-  ];
   let grid = wordUtils.makeHashGrid(rows, cols);
 
   //filler is a string with all words in it combined to match letter distribution
   let filler = words.reduce((x, y) => x + y);
-
-  const dirNext = {
-    right: pos => pos + 1,
-    left: pos => pos - 1,
-    up: pos => pos - cols,
-    down: pos => pos + cols,
-    rightup: pos => pos + 1 - cols,
-    rightdown: pos => pos + 1 + cols,
-    leftup: pos => pos - 1 - cols,
-    leftdown: pos => pos - 1 + cols
-  };
-
-  const dirEnd = {
-    right: (pos, length) => {
-      return { row: pos.row, col: pos.col + length };
-    },
-    left: (pos, length) => {
-      return { row: pos.row, col: pos.col - length };
-    },
-    up: (pos, length) => {
-      return { row: pos.row - length, col: pos.col };
-    },
-    down: (pos, length) => {
-      return { row: pos.row + length, col: pos.col };
-    },
-    rightup: (pos, length) => {
-      return { row: pos.row - length, col: pos.col + length };
-    },
-    rightdown: (pos, length) => {
-      return { row: pos.row + length, col: pos.col + length };
-    },
-    leftup: (pos, length) => {
-      return { row: pos.row - length, col: pos.col - length };
-    },
-    leftdown: (pos, length) => {
-      return { row: pos.row + length, col: pos.col - length };
-    }
-  };
 
   const updateGrid = (oldGrid, placement, word) => {
     let newGrid = oldGrid.slice(),
@@ -69,14 +22,14 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
 
     for (let i = 0; i < word.length; i++) {
       newGrid[position] = word[i];
-      position = dirNext[direction](position);
+      position = WORDSEARCHCONSTANTS.dirNext[direction](position, cols);
     }
 
     return newGrid;
   };
 
   const checkToFit = (word, grid, direction, position) => {
-    let endPosition = dirEnd[direction](
+    let endPosition = WORDSEARCHCONSTANTS.dirEnd[direction](
       wordUtils.rowColFromPos(position, cols),
       word.length - 1
     );
@@ -97,7 +50,7 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
       if (grid[testPosition] !== '#' && grid[testPosition] !== word[i]) {
         return false;
       }
-      testPosition = dirNext[direction](testPosition);
+      testPosition = WORDSEARCHCONSTANTS.dirNext[direction](testPosition, cols);
     }
     return true;
   };
@@ -105,8 +58,8 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   const scanPlacements = (word, grid) => {
     let placements = [];
     for (let j = 0; j < grid.length; j++) {
-      for (let k = 0; k < dirs.length; k++) {
-        let direction = dirs[k];
+      for (let k = 0; k < WORDSEARCHCONSTANTS.dirs.length; k++) {
+        let direction = WORDSEARCHCONSTANTS.dirs[k];
         if (
           checkToFit(word, grid, direction, j) &&
           checkNoCrashes(word, grid, direction, j)
@@ -123,7 +76,7 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
       { position, direction } = placement;
     for (let i = 0; i < length; i++) {
       positionArray.push(position);
-      position = dirNext[direction](position);
+      position = WORDSEARCHCONSTANTS.dirNext[direction](position, cols);
     }
     return positionArray;
   };
