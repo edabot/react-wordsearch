@@ -47,6 +47,10 @@ class Lists extends Component {
             { name: 'Star Trek', id: 'Hkl1u4Xuf' },
             { name: 'Muppets', id: 'SkzKu47uf' }
           ]
+        },
+        {
+          name: 'other',
+          grids: [{ name: 'Katakana words', id: 'S1qghN7dM' }]
         }
       ]
     };
