@@ -1,6 +1,6 @@
 const wordUtils = {
   removeNonCharactersAndUppercase: string => {
-    return string.replace(' ', '').toUpperCase();
+    return string.replace(/ /g, '').toUpperCase();
   },
 
   removeNonCharactersAndUppercaseForArray: stringArray => {
@@ -40,6 +40,16 @@ const wordUtils = {
 
   sortBiggestToShortest: words => {
     return words.sort(wordUtils.compareWordLength);
+  },
+
+  makeHashGrid: (rows, cols) => {
+    return new Array(rows * cols).fill('#');
+  },
+
+  rowColFromPos: (position, columns) => {
+    let row = Math.floor(position / columns),
+      col = position % columns;
+    return { row: row, col: col };
   }
 };
 
