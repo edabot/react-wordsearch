@@ -11,8 +11,6 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   let rows = rowInput || words[0].length + 2;
   let cols = colInput || rows;
 
-  let grid = wordUtils.makeHashGrid(rows, cols);
-
   //filler is a string with all words in it combined to match letter distribution
   let filler = words.reduce((x, y) => x + y);
 
@@ -55,11 +53,10 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
     return true;
   };
 
-  const scanPlacements = (word, grid) => {
+  const generateValidPlacements = (word, grid) => {
     let placements = [];
     for (let j = 0; j < grid.length; j++) {
-      for (let k = 0; k < WORDSEARCHCONSTANTS.dirs.length; k++) {
-        let direction = WORDSEARCHCONSTANTS.dirs[k];
+      for (let direction of WORDSEARCHCONSTANTS.dirs) {
         if (
           checkToFit(word, grid, direction, j) &&
           checkNoCrashes(word, grid, direction, j)
@@ -83,16 +80,16 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
 
   const createWordSearch = () => {
     let wordPositionsObject = {},
-      error = false;
-    grid = new Array(rows * cols).fill('#');
+      error = false,
+      grid = wordUtils.makeHashGrid(rows, cols);
     for (let i = 0; i < words.length; i++) {
-      let currentWord = words[i];
-      let placements = scanPlacements(currentWord, grid);
+      let currentWord = words[i],
+        placements = generateValidPlacements(currentWord, grid);
       if (placements.length === 0) {
         error = true;
         break;
       } else {
-        let idx = Math.floor(Math.random() * placements.length);
+        let idx = wordUtils.randomArrayIndex(placements);
         grid = updateGrid(grid, placements[idx], currentWord);
         let wordPositions = getPositions(placements[idx], currentWord.length);
         wordPositionsObject[currentWord] = wordPositions;

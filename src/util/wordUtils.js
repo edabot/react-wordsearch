@@ -50,6 +50,10 @@ const wordUtils = {
     let row = Math.floor(position / columns),
       col = position % columns;
     return { row: row, col: col };
+  },
+
+  randomArrayIndex: array => {
+    return Math.floor(Math.random() * array.length);
   }
 };
 
