@@ -1,6 +1,6 @@
 const wordUtils = {
   removeNonCharactersAndUppercase: string => {
-    return string.replace(/ /g, '').toUpperCase();
+    return string.replace(/[!@#$&()\-`.+,<>/\"\s]+/g, '').toUpperCase();
   },
 
   removeNonCharactersAndUppercaseForArray: stringArray => {
