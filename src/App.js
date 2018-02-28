@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import './App.css';
-import WordSearch from './wordSearch';
-import WordSearchDisplay from './WordSearchDisplay.react';
-import Textarea from 'react-textarea-autosize';
-import httpUtils from './util/httpUtils';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import copy from 'copy-to-clipboard';
-import wordUtils from './util/wordUtils';
+import React, { Component } from "react";
+import "./App.css";
+import WordSearch from "./wordSearch";
+import WordSearchDisplay from "./WordSearchDisplay.react";
+import Textarea from "react-textarea-autosize";
+import httpUtils from "./util/httpUtils";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
+import copy from "copy-to-clipboard";
+import wordUtils from "./util/wordUtils";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      wordText: 'cat\ndog\nbird',
+      wordText: "cat\ndog\nbird",
       wordList: [],
       results: null,
       hoverWord: null,
@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   makeWordSearch() {
-    let wordList = this.state.wordText.split('\n');
+    let wordList = this.state.wordText.split("\n");
     wordList = wordUtils.removeArrayRepeats(wordList);
     if (wordList.length > 0) {
       this.setState({
@@ -63,8 +63,8 @@ class App extends Component {
   }
 
   updateUrl(id) {
-    let path = '/' + id.data;
-    window.history.pushState({ urlPath: path }, '', path);
+    let path = "/" + id.data;
+    window.history.pushState({ urlPath: path }, "", path);
     this.setState({
       url: `wordsearchmachine.com/${id.data}`,
       saveDialogOpen: true
@@ -77,7 +77,7 @@ class App extends Component {
     this.setState({
       results: results,
       wordList: wordList,
-      wordText: wordList.join('\n')
+      wordText: wordList.join("\n")
     });
   }
 
@@ -90,12 +90,12 @@ class App extends Component {
   }
 
   clearHoverWord(e) {
-    this.setState({ hoverWord: '', showPositions: [] });
+    this.setState({ hoverWord: "", showPositions: [] });
   }
 
   displayUrl() {
     if (this.state.url !== null) {
-      return <div>{this.state.url}</div>;
+      return <div className="url">{this.state.url}</div>;
     }
   }
 
@@ -194,11 +194,11 @@ class App extends Component {
           />
         </div>
         {this.displayResults()}
-        {this.displayUrl()}
         <div className="buttons">
           {this.displaySaveButton()}
           {this.displayPrintButton()}
         </div>
+        {this.displayUrl()}
         <Dialog
           title="Your word search has been saved"
           modal={false}
