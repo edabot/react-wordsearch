@@ -1,6 +1,6 @@
 const wordUtils = {
   removeNonCharactersAndUppercase: string => {
-    return string.replace(/[!@#$&()\-`.+,<>'/\"\s]+/g, '').toUpperCase();
+    return string.replace(/[!@#$&()\-`.+,<>'/\\"\s]+/g, "").toUpperCase();
   },
 
   removeNonCharactersAndUppercaseForArray: stringArray => {
@@ -26,7 +26,7 @@ const wordUtils = {
     let len = filler.length,
       newGrid = hashGrid.slice();
     for (let i = 0; i < hashGrid.length; i++) {
-      if (hashGrid[i] === '#') {
+      if (hashGrid[i] === "#") {
         let newLetter = filler[Math.floor(Math.random() * len)];
         newGrid[i] = newLetter;
       }
@@ -43,7 +43,7 @@ const wordUtils = {
   },
 
   makeHashGrid: (rows, cols) => {
-    return new Array(rows * cols).fill('#');
+    return new Array(rows * cols).fill("#");
   },
 
   rowColFromPos: (position, columns) => {

@@ -1,6 +1,6 @@
-import list from './list';
-import wordUtils from './util/wordUtils';
-import WORDSEARCHCONSTANTS from './constants/wordSearch';
+import list from "./list";
+import wordUtils from "./util/wordUtils";
+import WORDSEARCHCONSTANTS from "./constants/wordSearch";
 
 const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   let cleanedWordList = wordUtils.removeNonCharactersAndUppercaseForArray(
@@ -45,7 +45,7 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   const checkNoCrashes = (word, grid, direction, position) => {
     let testPosition = position;
     for (let i = 0; i < word.length; i++) {
-      if (grid[testPosition] !== '#' && grid[testPosition] !== word[i]) {
+      if (grid[testPosition] !== "#" && grid[testPosition] !== word[i]) {
         return false;
       }
       testPosition = WORDSEARCHCONSTANTS.dirNext[direction](testPosition, cols);
@@ -54,9 +54,10 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   };
 
   const generateValidPlacements = (word, grid) => {
-    let placements = [];
+    let placements = [],
+      { directions } = WORDSEARCHCONSTANTS;
     for (let j = 0; j < grid.length; j++) {
-      for (let direction of WORDSEARCHCONSTANTS.dirs) {
+      for (let direction of directions) {
         if (
           checkToFit(word, grid, direction, j) &&
           checkNoCrashes(word, grid, direction, j)
@@ -96,7 +97,7 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
       }
     }
     if (error) {
-      return 'error';
+      return "error";
     }
     grid = wordUtils.fillUpGrid(grid, filler);
     return { grid: grid, wordPositions: wordPositionsObject, rows: rows };
@@ -107,7 +108,7 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   const runWordSearch = () => {
     for (let i = 0; i < 3; i++) {
       let result = createWordSearch();
-      if (result !== 'error') {
+      if (result !== "error") {
         response = result;
         break;
       }
