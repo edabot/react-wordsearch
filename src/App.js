@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import WordSearch from "./wordSearch";
 import WordSearchDisplay from "./WordSearchDisplay.react";
+import DirectionPicker from "./components/DirectionPicker";
 import Textarea from "react-textarea-autosize";
 import httpUtils from "./util/httpUtils";
 import Dialog from "material-ui/Dialog";
@@ -9,6 +10,15 @@ import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import copy from "copy-to-clipboard";
 import wordUtils from "./util/wordUtils";
+import CONSTANTS from "./constants/wordSearch";
+
+const arrayToObject = arr => {
+  let result = {};
+  for (let item of arr) {
+    result[item] = true;
+  }
+  return result;
+};
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +32,8 @@ class App extends Component {
       showPositions: null,
       url: null,
       canSave: false,
-      saveDialogOpen: false
+      saveDialogOpen: false,
+      directions: arrayToObject(CONSTANTS.directions)
     };
   }
 
@@ -44,7 +55,7 @@ class App extends Component {
     wordList = wordUtils.removeArrayRepeats(wordList);
     if (wordList.length > 0) {
       this.setState({
-        results: WordSearch(wordList),
+        results: WordSearch(wordList, this.state.directions),
         wordList: wordList,
         canSave: true,
         url: null
@@ -160,6 +171,12 @@ class App extends Component {
     copy(this.state.url);
   };
 
+  toggleDirection = direction => {
+    let newDirections = this.state.directions;
+    newDirections[direction] = !newDirections[direction];
+    this.setState({ directions: newDirections });
+  };
+
   render() {
     const actions = [
       <FlatButton
@@ -187,6 +204,10 @@ class App extends Component {
               onChange={this.updateWords.bind(this)}
             />
           </div>
+          <DirectionPicker
+            directions={this.state.directions}
+            onClick={this.toggleDirection}
+          />
           <RaisedButton
             label="make a word search"
             primary={true}

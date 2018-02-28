@@ -4,12 +4,28 @@ import WORDSEARCHCONSTANTS from "./constants/wordSearch";
 
 const CROSSMULTIPLIER = 50;
 
-const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
+const trueToArray = object => {
+  let result = [],
+    directions = Object.keys(object);
+  for (let direction of directions) {
+    if (object[direction]) {
+      result.push(direction);
+    }
+  }
+  return result;
+};
+
+const WordSearch = (
+  wordList = list,
+  directions,
+  rowInput = null,
+  colInput = null
+) => {
   let cleanedWordList = wordUtils.removeNonCharactersAndUppercaseForArray(
     wordList
   );
   let words = wordUtils.sortBiggestToShortest(cleanedWordList);
-
+  let wordDirections = trueToArray(directions);
   let rows = rowInput || words[0].length + 2;
   let cols = colInput || rows;
 
@@ -60,10 +76,10 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   };
 
   const generateValidPlacements = (word, grid) => {
-    let placements = [],
-      { directions } = WORDSEARCHCONSTANTS;
+    let placements = [];
+
     for (let j = 0; j < grid.length; j++) {
-      for (let direction of directions) {
+      for (let direction of wordDirections) {
         let wordCrosses = checkNoCrashes(word, grid, direction, j);
         if (checkToFit(word, grid, direction, j) && wordCrosses !== false) {
           let emphasis = CROSSMULTIPLIER * wordCrosses + 1,

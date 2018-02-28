@@ -56,6 +56,10 @@ a {
   margin: 0.5rem;
 }
 
+.direction_off {
+  color: #999;
+}
+
 .url {
   color: #666;
   margin-top: 2em;
