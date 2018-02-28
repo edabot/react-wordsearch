@@ -50,14 +50,39 @@ a {
   margin: 1em auto;
 }
 
+.input {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: center;
+}
+
 .word-input {
   width: 300px;
   max-height: 200px;
   margin: 0.5rem;
 }
 
-.direction_off {
-  color: #999;
+.direction-off {
+  color: #d9d9d9;
+}
+
+.direction-on {
+  color: #79bd9a;
+}
+
+.direction-arrows {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100px;
+}
+
+.arrow {
+  width: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: -0.6rem;
 }
 
 .url {

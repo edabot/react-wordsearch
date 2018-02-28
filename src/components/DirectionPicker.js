@@ -1,36 +1,62 @@
 import React, { Component } from "react";
 import CONSTANTS from "../constants/wordSearch";
 
+const displayDirections = [
+  "leftup",
+  "up",
+  "rightup",
+  "left",
+  "center",
+  "right",
+  "leftdown",
+  "down",
+  "rightdown"
+];
+
+const directionArrows = {
+  leftup: "↖",
+  up: "↑",
+  rightup: "↗",
+  left: "←",
+  center: "x",
+  right: "→",
+  leftdown: "↙",
+  down: "↓",
+  rightdown: "↘"
+};
+
 const Direction = ({ directions, direction, onClick }) => {
   let dirClass;
   if (directions[direction]) {
-    dirClass = "direction_on";
+    dirClass = "arrow direction-on";
   } else {
-    dirClass = "direction_off";
+    dirClass = "arrow direction-off";
+  }
+  if (direction === "center") {
+    return <div className="arrow"> </div>;
   }
   return (
     <div className={dirClass} onClick={() => onClick(direction)}>
-      {direction}
+      {directionArrows[direction]}
     </div>
   );
 };
 
 class DirectionPicker extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="direction-list">
-        {CONSTANTS.directions.map(direction => (
-          <Direction
-            directions={this.props.directions}
-            direction={direction}
-            onClick={this.props.onClick}
-            key={direction}
-          />
-        ))}
+        <h2>Word directions:</h2>
+        <div className="direction-arrows">
+          {displayDirections.map(direction => (
+            <Direction
+              directions={this.props.directions}
+              direction={direction}
+              onClick={this.props.onClick}
+              key={direction}
+            />
+          ))}
+        </div>
       </div>
     );
   }

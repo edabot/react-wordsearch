@@ -1,13 +1,13 @@
 export default {
   directions: [
-    "right",
-    "left",
-    "up",
-    "down",
-    "rightup",
-    "rightdown",
     "leftup",
-    "leftdown"
+    "up",
+    "rightup",
+    "left",
+    "right",
+    "leftdown",
+    "down",
+    "rightdown"
   ],
 
   dirNext: {

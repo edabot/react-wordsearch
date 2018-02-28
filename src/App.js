@@ -195,19 +195,21 @@ class App extends Component {
     return (
       <div className="App">
         <div className="controls no-print">
-          <div>Add your list of words here, separated by line breaks</div>
-          <div>
-            <Textarea
-              useCacheForDOMMeasurements
-              value={this.state.wordText}
-              className="word-input"
-              onChange={this.updateWords.bind(this)}
+          <div className="input">
+            <div>
+              <div>Add your list of words here, separated by line breaks</div>
+              <Textarea
+                useCacheForDOMMeasurements
+                value={this.state.wordText}
+                className="word-input"
+                onChange={this.updateWords.bind(this)}
+              />
+            </div>
+            <DirectionPicker
+              directions={this.state.directions}
+              onClick={this.toggleDirection}
             />
           </div>
-          <DirectionPicker
-            directions={this.state.directions}
-            onClick={this.toggleDirection}
-          />
           <RaisedButton
             label="make a word search"
             primary={true}
