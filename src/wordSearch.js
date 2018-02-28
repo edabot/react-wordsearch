@@ -2,7 +2,9 @@ import list from "./list";
 import wordUtils from "./util/wordUtils";
 import WORDSEARCHCONSTANTS from "./constants/wordSearch";
 
-const CROSSMULTIPLIER = 50;
+//constants for improving odds of words crossing and diagonals to be included
+const CROSSMULTIPLIER = 30,
+  DIAGONALMULTIPLIER = 10;
 
 const trueToArray = object => {
   let result = [],
@@ -26,7 +28,8 @@ const WordSearch = (
   );
   let words = wordUtils.sortBiggestToShortest(cleanedWordList);
   let wordDirections = trueToArray(directions);
-  let rows = rowInput || words[0].length + 2;
+  let rows =
+    rowInput || words[0].length + Math.floor(Math.sqrt(words[0].length));
   let cols = colInput || rows;
 
   //filler is a string with all words in it combined to match letter distribution
@@ -82,11 +85,14 @@ const WordSearch = (
       for (let direction of wordDirections) {
         let wordCrosses = checkNoCrashes(word, grid, direction, j);
         if (checkToFit(word, grid, direction, j) && wordCrosses !== false) {
-          let emphasis = CROSSMULTIPLIER * wordCrosses + 1,
-            placementsAddition = new Array(emphasis).fill({
-              position: j,
-              direction: direction
-            });
+          let emphasis = CROSSMULTIPLIER * wordCrosses + 1;
+          if (WORDSEARCHCONSTANTS.diagonals.includes(direction)) {
+            emphasis += DIAGONALMULTIPLIER;
+          }
+          let placementsAddition = new Array(emphasis).fill({
+            position: j,
+            direction: direction
+          });
           placements = placements.concat(placementsAddition);
         }
       }

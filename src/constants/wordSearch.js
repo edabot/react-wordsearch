@@ -10,6 +10,8 @@ export default {
     "rightdown"
   ],
 
+  diagonals: ["leftup", "rightup", "leftdown", "rightdown"],
+
   dirNext: {
     right: (pos, cols) => pos + 1,
     left: (pos, cols) => pos - 1,
