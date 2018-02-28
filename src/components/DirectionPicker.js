@@ -46,7 +46,7 @@ class DirectionPicker extends Component {
   render() {
     return (
       <div className="direction-list">
-        <h2>Word directions:</h2>
+        <h2>Word directions</h2>
         <div className="direction-arrows">
           {displayDirections.map(direction => (
             <Direction
