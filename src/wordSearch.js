@@ -2,6 +2,8 @@ import list from "./list";
 import wordUtils from "./util/wordUtils";
 import WORDSEARCHCONSTANTS from "./constants/wordSearch";
 
+const CROSSMULTIPLIER = 50;
+
 const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   let cleanedWordList = wordUtils.removeNonCharactersAndUppercaseForArray(
     wordList
@@ -43,14 +45,18 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
   };
 
   const checkNoCrashes = (word, grid, direction, position) => {
-    let testPosition = position;
+    let testPosition = position,
+      wordCrosses = 0;
+
     for (let i = 0; i < word.length; i++) {
       if (grid[testPosition] !== "#" && grid[testPosition] !== word[i]) {
         return false;
+      } else if (grid[testPosition] !== "#" && grid[testPosition] === word[i]) {
+        wordCrosses += 1;
       }
       testPosition = WORDSEARCHCONSTANTS.dirNext[direction](testPosition, cols);
     }
-    return true;
+    return wordCrosses;
   };
 
   const generateValidPlacements = (word, grid) => {
@@ -58,11 +64,14 @@ const WordSearch = (wordList = list, rowInput = null, colInput = null) => {
       { directions } = WORDSEARCHCONSTANTS;
     for (let j = 0; j < grid.length; j++) {
       for (let direction of directions) {
-        if (
-          checkToFit(word, grid, direction, j) &&
-          checkNoCrashes(word, grid, direction, j)
-        ) {
-          placements.push({ position: j, direction: direction });
+        let wordCrosses = checkNoCrashes(word, grid, direction, j);
+        if (checkToFit(word, grid, direction, j) && wordCrosses !== false) {
+          let emphasis = CROSSMULTIPLIER * wordCrosses + 1,
+            placementsAddition = new Array(emphasis).fill({
+              position: j,
+              direction: direction
+            });
+          placements = placements.concat(placementsAddition);
         }
       }
     }
