@@ -197,7 +197,7 @@ class App extends Component {
         <div className="controls no-print">
           <div className="input">
             <div>
-              <div>Add your list of words here, separated by line breaks</div>
+              <h3>Add your list of words here, separated by line breaks</h3>
               <Textarea
                 useCacheForDOMMeasurements
                 value={this.state.wordText}

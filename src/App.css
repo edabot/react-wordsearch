@@ -48,6 +48,9 @@ a {
 
 .controls {
   margin: 1em auto;
+  max-width: 660px;
+  background-color: #fafafa;
+  padding: 1em;
 }
 
 .input {
@@ -55,20 +58,22 @@ a {
   flex-direction: row;
   margin: 0 auto;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.input h3 {
+  font-size: 1rem;
 }
 
 .word-input {
   width: 300px;
   max-height: 200px;
-  margin: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .direction-list {
   margin-left: 2rem;
-}
-
-.direction-list h2 {
-  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .direction-off {
